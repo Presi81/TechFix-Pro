@@ -1,12 +1,13 @@
 /* ==========================================================================
    1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos)
    ========================================================================== */
-// URLs y Llaves de conexión con el Backend (Se inicializan vacías o se configuran en el despliegue)
-const SUPABASE_URL = window.env?.SUPABASE_URL || '';
-const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || ''; 
+// URLs y Llaves de conexión con el Backend
 
-// LLAVE DE ACCESO A LA INTELIGENCIA ARTIFICIAL (Google Gemini)
-const GEMINI_API_KEY = window.env?.GEMINI_API_KEY || '';
+// Si estamos en Vercel, estas variables se configurarán dinámicamente. 
+// Si no, recurrimos a cadenas vacías (o pon tus llaves locales aquí si quieres probar en tu PC).
+const BASE_URL = window.env?.SUPABASE_URL === "VERCEL_SUB_URL" ? '' : (window.env?.SUPABASE_URL || '');
+const ANON_KEY = window.env?.SUPABASE_ANON_KEY === "VERCEL_SUB_KEY" ? '' : (window.env?.SUPABASE_ANON_KEY || '');
+const API_KEY  = window.env?.GEMINI_API_KEY === "VERCEL_SUB_GEMINI" ? '' : (window.env?.GEMINI_API_KEY || '');
 
 // Inicializamos el cliente global de Supabase
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
