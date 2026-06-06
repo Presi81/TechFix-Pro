@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TechFix Pro - ERP de Taller</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="notification-container" class="toast-container"></div>
+    <header>
+        <h1>🛠️ TechFix Pro</h1>
+        <p id="sub-header">Gestión de Reparaciones Avanzada</p>
+    </header>
+
+    <main>
+        <section class="card-section">
+            <h2>📝 Nueva Orden de Entrada</h2>
+            <form id="repairForm">
+                <div class="form-group">
+                    <label for="cliente">Nombre del Cliente</label>
+                    <input type="text" id="cliente" placeholder="Ej: Juan Pérez" required>
+                </div>
+                <div class="form-group">
+                    <label for="telefono">Teléfono / WhatsApp</label>
+                    <input type="tel" id="telefono" placeholder="Ej: 600123456" required>
+                </div>
+
+                <hr>
+
+                <div class="form-group">
+                    <label for="modelo">Equipo y Modelo</label>
+                    <input type="text" id="modelo" placeholder="Ej: PS5, MacBook Pro 2020" required>
+                </div>
+                <div class="form-group">
+                    <label for="nserie">Número de Serie</label>
+                    <input type="text" id="nserie" placeholder="Ej: Ser-987654321" required>
+                </div>
+                <div class="form-group">
+                    <label for="fallo">Síntomas / Avería reportada</label>
+                    <textarea id="fallo" placeholder="Describe qué le pasa al equipo..." required></textarea>
+                </div>
+
+                <div class="ia-block">
+                    <button type="button" id="btnIA" class="btn-ia">🤖 Generar Prediagnóstico con IA</button>
+                    <div id="iaOutput" class="ia-output hidden"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="diagnostico">Diagnóstico Técnico Oficial</label>
+                    <textarea id="diagnostico" placeholder="Notas del técnico tras la revisión profunda..."></textarea>
+                </div>
+
+                <div class="row-inputs">
+                    <div class="form-group">
+                        <label for="coste">Coste Repuesto (€)</label>
+                        <input type="number" id="coste" step="0.01" placeholder="0.00">
+                    </div>
+                    <div class="form-group">
+                        <label for="total">Precio Final (€)</label>
+                        <input type="number" id="total" step="0.01" placeholder="0.00">
+                    </div>
+                </div>
+
+                <button type="submit" id="btnGuardar" class="btn-main">💾 Registrar en Base de Datos</button>
+            </form>
+        </section>
+
+        <section class="card-section">
+            <h2>📈 Cuadro de Mandos - Estado del Taller</h2>
+            <div class="dashboard-grid">
+                <div class="stat-card">
+                    <span class="stat-label">Total Órdenes</span>
+                    <span id="statTotal" class="stat-value">0</span>
+                </div>
+                <div class="stat-card stat-pending">
+                    <span class="stat-label">⏳ Pendientes</span>
+                    <span id="statPendientes" class="stat-value">0</span>
+                </div>
+                <div class="stat-card stat-progress">
+                    <span class="stat-label">👨‍💻 En Curso</span>
+                    <span id="statEnCurso" class="stat-value">0</span>
+                </div>
+                <div class="stat-card stat-revenue">
+                    <span class="stat-label">💰 Caja Acumulada</span>
+                    <span id="statCaja" class="stat-value">0.00€</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="card-section">
+            <h2>🔍 Historial de Reparaciones</h2>
+            <input type="text" id="buscador" placeholder="Busca por número de serie, cliente o modelo...">
+        </section>
+
+        <section class="card-section">
+            <h2>📋 Equipos en Taller</h2>
+            <div id="listaReparaciones"></div>
+        </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,547 @@
+/* ==========================================================================
+   1. VARIABLES DE ENTORNO Y DISEÑO CONTEMPORÁNEO (Diseño de Taller)
+   ========================================================================== */
+:root {
+    --primary: #1e40af;       /* Azul oscuro institucional para elementos de control */
+    --primary-light: #3b82f6; /* Azul brillante para estados activos y botones */
+    --bg-main: #f8fafc;       /* Fondo grisáceo limpio para evitar fatiga visual */
+    --surface: #ffffff;       /* Superficie blanca para las tarjetas contenedor */
+    --text-main: #0f172a;     /* Gris casi negro para máxima legibilidad */
+    --text-muted: #64748b;    /* Gris secundario para etiquetas y fechas */
+    --border: #e2e8f0;        /* Bordes sutiles para delimitar secciones */
+    
+    /* Paleta semafórica para la gestión visual del taller */
+    --status-pendiente: #f59e0b; /* Naranja indicando espera */
+    --status-reparando: #3b82f6;  /* Azul indicando trabajo en curso */
+    --status-listo: #16a34a;     /* Verde indicando control de calidad superado */
+    
+    /* Degradado especial tecnológico para destacar el bloque de IA */
+    --ia-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
+}
+
+/* ==========================================================================
+   2. RESETEO Y CONFIGURACIÓN BASE (Enfoque Táctil / Mobile-First)
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Garantiza que el padding no altere el ancho total */
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+    background-color: var(--bg-main);
+    color: var(--text-main);
+    line-height: 1.5;
+    padding-bottom: 40px; /* Margen de seguridad inferior en dispositivos móviles */
+}
+
+/* ==========================================================================
+   3. CABECERA (Identidad de la Aplicación)
+   ========================================================================== */
+header {
+    background: linear-gradient(135deg, var(--primary) 0%, #1d4ed8 100%);
+    color: var(--surface);
+    padding: 25px 15px;
+    text-align: center;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+    font-size: 1.6rem;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+}
+
+#sub-header {
+    font-size: 0.85rem;
+    opacity: 0.85;
+    margin-top: 4px;
+}
+
+/* ==========================================================================
+   4. ESTRUCTURA DE CONTENEDORES (Layout Semántico)
+   ========================================================================== */
+main {
+    padding: 15px;
+    max-width: 700px; /* Limita el ancho en PC para mantener una lectura óptima */
+    margin: 0 auto;   /* Centra el contenido en pantallas grandes */
+}
+
+/* Tarjetas modulares que agrupan funciones lógicas */
+.card-section {
+    background: var(--surface);
+    margin-bottom: 20px;
+    padding: 20px;
+    border-radius: 16px;
+    border: 1px solid var(--border);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+h2 {
+    font-size: 1.15rem;
+    color: var(--text-main);
+    margin-bottom: 18px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* ==========================================================================
+   5. ELEMENTOS DE FORMULARIO (Componentes UI Accesibles y Robustos)
+   ========================================================================== */
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+form label {
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Inputs optimizados para pulsaciones con los dedos */
+input[type="text"],
+input[type="tel"],
+input[type="number"],
+textarea {
+    width: 100%;
+    padding: 14px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    font-size: 1rem; /* Crucial: 1rem evita que Safari/Chrome hagan zoom forzado en móvil */
+    background: #f8fafc;
+    color: var(--text-main);
+    transition: all 0.2s ease;
+}
+
+input:focus, 
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-light);
+    background: var(--surface);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.15); /* Efecto de foco profesional */
+}
+
+textarea {
+    min-height: 90px;
+    resize: vertical; /* Permite estirar verticalmente en pantallas de escritorio */
+}
+
+/* Alineación dual de costes en una sola línea */
+.row-inputs {
+    display: flex;
+    gap: 12px;
+}
+
+.row-inputs .form-group {
+    flex: 1; /* Distribuye el espacio de forma equitativa al 50% */
+}
+
+hr {
+    border: 0;
+    border-top: 1px solid var(--border);
+    margin: 8px 0;
+}
+
+/* ==========================================================================
+   6. BOTONES (Elementos de Acción Primaria y Secundaria)
+   ========================================================================== */
+button {
+    font-size: 1rem;
+    font-weight: 700;
+    padding: 14px 20px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.98); /* Feedback de pulsación física al presionar en la pantalla */
+}
+
+.btn-main {
+    background: var(--primary-light);
+    color: var(--surface);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+/* ==========================================================================
+   7. MÓDULO EXCLUSIVO DE INTELIGENCIA ARTIFICIAL (UI Asistida)
+   ========================================================================== */
+.ia-block {
+    margin: 10px 0;
+    background: #f5f3ff; /* Fondo violeta ultra claro para envolver la funcionalidad */
+    padding: 12px;
+    border-radius: 12px;
+    border: 1px dashed #c084fc;
+}
+
+.btn-ia {
+    background: var(--ia-gradient);
+    color: var(--surface);
+    width: 100%;
+    box-shadow: 0 4px 12px rgba(139, 92, 246, 0.25);
+}
+
+.ia-output {
+    margin-top: 12px;
+    padding: 14px;
+    background: var(--surface);
+    border-left: 4px solid #8b5cf6;
+    border-radius: 0 10px 10px 0;
+    font-size: 0.9rem;
+    color: #4c1d95;
+    box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);
+}
+
+/* Clase de utilidad para ocultar/mostrar elementos dinámicamente con JS */
+.hidden {
+    display: none !important;
+}
+
+/* ==========================================================================
+   8. BUSCADOR, TARJETAS DINÁMICAS Y ESTADOS DEL HISTORIAL
+   ========================================================================== */
+#buscador {
+    border: 2px solid var(--primary-light);
+    background: var(--surface);
+}
+
+.repair-card {
+    border: 1px solid var(--border);
+    padding: 16px;
+    border-radius: 12px;
+    margin-bottom: 12px;
+    background: var(--surface);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 700;
+}
+
+.status-badge {
+    font-size: 0.7rem;
+    font-weight: 800;
+    padding: 4px 10px;
+    border-radius: 20px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: var(--surface);
+}
+
+/* Inyección dinámica de colores según el estado físico del equipo */
+.badge-pendiente { background-color: var(--status-pendiente); }
+.badge-reparando { background-color: var(--status-reparando); }
+.badge-listo { background-color: var(--status-listo); }
+
+.card-metadata {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 4px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--border);
+}
+
+/* ==========================================================================
+   NUEVOS ESTILOS PARA TARJETAS INTERACTIVAS (HISTORIAL, EDICIÓN Y BORRADO)
+   ========================================================================== */
+
+/* Mensaje cuando el taller está vacío */
+.no-data {
+    text-align: center;
+    color: #64748b;
+    padding: 30px;
+    font-style: italic;
+    font-size: 0.95rem;
+}
+
+/* Contenedor del Historial Clínico de Hardware */
+.history-box {
+    margin-top: 14px;
+    padding: 12px;
+    background-color: #f8fafc;
+    border-left: 4px solid #6366f1;
+    border-radius: 6px;
+    box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.02);
+}
+
+.history-title {
+    font-size: 11px;
+    color: #475569;
+    display: block;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.history-content {
+    font-size: 12px;
+    color: #334155;
+    max-height: 120px;
+    overflow-y: auto;
+    line-height: 1.5;
+    font-family: 'Courier New', Courier, monospace; /* Toque técnico estilo log */
+}
+
+/* Bloque de Entrada de Notas Rápidas */
+.note-input-group {
+    margin-top: 10px;
+    display: flex;
+    gap: 8px;
+}
+
+.input-note {
+    flex-grow: 1;
+    font-size: 12px;
+    padding: 7px 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    background-color: #ffffff;
+}
+
+.input-note:focus {
+    border-color: #6366f1;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
+}
+
+.btn-note {
+    font-size: 12px;
+    background-color: #6366f1;
+    color: white;
+    border: none;
+    padding: 7px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
+}
+
+.btn-note:hover {
+    background-color: #4f46e5;
+}
+
+/* Grupo del Selector de Estados */
+.status-selector-group {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed #e2e8f0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.selector-label {
+    font-size: 11px;
+    font-weight: 700;
+    color: #64748b;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.select-status {
+    font-size: 12px;
+    padding: 5px 10px;
+    border-radius: 6px;
+    border: 1px solid #cbd5e1;
+    background-color: #ffffff;
+    cursor: pointer;
+    color: #334155;
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.select-status:focus {
+    border-color: #6366f1;
+    outline: none;
+}
+
+/* Estilo extra para el estado Entregado en los Badges existentes */
+.badge-ententeado, .badge-entregado {
+    background-color: #e2e8f0;
+    color: #475569;
+}
+
+/* Grupo de Botones de Acción Avanzada (Editar / Eliminar) */
+.action-buttons-group {
+    margin-top: 14px;
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.btn-edit-data {
+    font-size: 11px;
+    background-color: #f1f5f9;
+    color: #475569;
+    border: 1px solid #e2e8f0;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-edit-data:hover {
+    background-color: #e2e8f0;
+    color: #1e293b;
+}
+
+.btn-delete-data {
+    font-size: 11px;
+    background-color: #fef2f2;
+    color: #ef4444;
+    border: 1px solid #fee2e2;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-delete-data:hover {
+    background-color: #fee2e2;
+    color: #dc2626;
+}
+
+/* ==========================================================================
+   ESTILOS DE MAQUETACIÓN E IMPRESIÓN DIGITAL (CSS @MEDIA PRINT)
+   ========================================================================== */
+
+/* Botón de impresión en la interfaz normal */
+.btn-print-data {
+    font-size: 11px;
+    background-color: #e0f2fe;
+    color: #0369a1;
+    border: 1px solid #bae6fd;
+    padding: 5px 10px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s ease;
+}
+
+.btn-print-data:hover {
+    background-color: #bae6fd;
+    color: #0c4a6e;
+}
+
+/* 🖨️ DIRECTIVAS DE IMPRESIÓN (Solo se aplican cuando va a papel o PDF) */
+@media print {
+    /* 1. Ocultamos por completo toda la estructura web del ERP */
+    header, 
+    main > section:not(:last-child), 
+    .card-section h2,
+    #buscador,
+    .dashboard-grid {
+        display: none !important;
+    }
+
+    /* 2. Si estamos en modo aislado, ocultamos las tarjetas que NO queremos imprimir */
+    body.modo-impresion-aislada .repair-card:not(.tarjeta-activa-print) {
+        display: none !important;
+    }
+
+    /* 3. Re-maquetamos la tarjeta activa para que parezca un albarán oficial */
+    body.modo-impresion-aislada .tarjeta-activa-print {
+        border: 2px solid #000000 !important;
+        box-shadow: none !important;
+        background-color: #ffffff !important;
+        padding: 25px !important;
+        width: 100% !important;
+        font-size: 14px !important;
+        color: #000000 !important;
+    }
+
+    /* 4. Ocultamos los botones interactivos de acción y los inputs de notas en el papel */
+    .note-input-group,
+    .status-selector-group,
+    .action-buttons-group,
+    .input-note,
+    .btn-note {
+        display: none !important;
+    }
+
+    /* 5. Estilizamos la bitácora técnica para que se imprima limpia en blanco y negro */
+    .history-box {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-left: 5px solid #000000 !important;
+        margin-top: 20px !important;
+    }
+
+    /* 6. Añadimos un pie de página legal para la firma del cliente (cumplimiento LOPD) */
+    body.modo-impresion-aislada .tarjeta-activa-print::after {
+        content: "\A\A\A----------------================------------------------\A Conforme Cliente (Firma) \A\A * De acuerdo con la normativa vigente de protección de datos, la información contenida en esta orden se procesa exclusivamente para el servicio técnico del equipo.";
+        white-space: pre-wrap;
+        display: block;
+        margin-top: 50px;
+        font-size: 11px;
+        color: #475569;
+        text-align: left;
+        border-top: 1px dashed #cbd5e1;
+        padding-top: 15px;
+    }
+}
+
+/* ==========================================================================
+   SISTEMA DE NOTIFICACIONES COMPONENTIZADO (TOASTS SYSTEM)
+   ========================================================================== */
+.toast-container {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 9999;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.toast-card {
+    min-width: 280px;
+    padding: 14px 18px;
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    animation: slideIn 0.3s ease forwards;
+}
+
+@keyframes slideIn {
+    from { opacity: 0; transform: translateX(100px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.toast-success { background-color: #10b981; border-left: 5px solid #047857; }
+.toast-error { background-color: #ef4444; border-left: 5px solid #b91c1c; }
+.toast-warning { background-color: #f59e0b; border-left: 5px solid #b45309; }
+
+/* Estilo del texto resaltado en el buscador */
+mark.highlight {
+    background-color: #fef08a; /* Amarillo suave corporativo */
+    color: #854d0e;
+    padding: 0 2px;
+    border-radius: 3px;
+    font-weight: 700;
+}
