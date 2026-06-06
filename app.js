@@ -1,20 +1,27 @@
 /* ==========================================================================
    1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos)
    ========================================================================== */
-// URLs y Llaves de conexión con el Backend
 
-// Si estamos en Vercel, estas variables se configurarán dinámicamente. 
-// Si no, recurrimos a cadenas vacías (o pon tus llaves locales aquí si quieres probar en tu PC).
-const BASE_URL = window.env?.SUPABASE_URL === "VERCEL_SUB_URL" ? '' : (window.env?.SUPABASE_URL || '');
-const ANON_KEY = window.env?.SUPABASE_ANON_KEY === "VERCEL_SUB_KEY" ? '' : (window.env?.SUPABASE_ANON_KEY || '');
-const API_KEY  = window.env?.GEMINI_API_KEY === "VERCEL_SUB_GEMINI" ? '' : (window.env?.GEMINI_API_KEY || '');
+// Leemos directamente lo que inyecta el entorno seguro de Vercel
+const SUPABASE_URL = window.env?.SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || '';
+const GEMINI_API_KEY = window.env?.GEMINI_API_KEY || '';
 
-// Inicializamos el cliente global de Supabase
-const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Inicializamos el cliente global de Supabase de manera segura
+let supabaseClient = null;
+
+try {
+    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
+        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    } else {
+        console.warn("Atención: Las llaves de Supabase están vacías. Configúralas en el panel de Vercel.");
+    }
+} catch (err) {
+    console.error("Error crítico al inicializar el SDK de Supabase:", err);
+}
 
 // Variable global para almacenar el ID del equipo que se está editando (null si es una nueva orden)
 let idEdicionActual = null;
-
 
 /* ==========================================================================
    2. MAPEADO DEL DOM (Selectores de la Interfaz)
