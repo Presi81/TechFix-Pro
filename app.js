@@ -2,7 +2,7 @@
    1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos)
    ========================================================================== */
 
-// Leemos directamente lo que inyecta el entorno seguro de Vercel
+// Leemos las variables globales inyectadas de forma externa por config.js
 const SUPABASE_URL = window.env?.SUPABASE_URL || '';
 const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || '';
 const GEMINI_API_KEY = window.env?.GEMINI_API_KEY || '';
@@ -14,7 +14,7 @@ try {
     if (SUPABASE_URL && SUPABASE_ANON_KEY) {
         supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     } else {
-        console.warn("Atención: Las llaves de Supabase están vacías. Configúralas en el panel de Vercel.");
+        console.warn("Atención: Las llaves de Supabase no se han cargado desde config.js");
     }
 } catch (err) {
     console.error("Error crítico al inicializar el SDK de Supabase:", err);
