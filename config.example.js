@@ -1,6 +1,0 @@
-// REPLICA ESTE ARCHIVO COMO "config.js" CON TUS CREDENCIALES REALES
-window.env = {
-    SUPABASE_URL: "",
-    SUPABASE_ANON_KEY: "",
-    GEMINI_API_KEY: ""
-};
