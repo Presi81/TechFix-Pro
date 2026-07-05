@@ -1,19 +1,18 @@
 /* ==========================================================================
    1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos Protegida)
    ========================================================================== */
-// URLs y Llaves de conexión - Abstraídas para evitar fugas en el repositorio público
-const SUPABASE_URL = window.env?.SUPABASE_URL 
-const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY 
+// URLs y Llaves de conexión - Extraídas del objeto global seguro window.env
+const SUPABASE_URL = window.env?.SUPABASE_URL || '';
+const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || ''; 
 
 // LLAVE DE ACCESO A LA INTELIGENCIA ARTIFICIAL (Google Gemini)
-const GEMINI_API_KEY = window.env?.GEMINI_API_KEY 
+const GEMINI_API_KEY = window.env?.GEMINI_API_KEY || '';
 
 // Inicializamos el cliente global de Supabase de forma segura
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// Variable global para almacenar el ID del equipo que se está editando (null si es una nueva orden)
+// Variable global para almacenar el ID del equipo que se está editando
 let idEdicionActual = null;
-
 
 /* ==========================================================================
    2. MAPEADO DEL DOM (Selectores de la Interfaz)
@@ -303,6 +302,7 @@ async function generarPrediagnostico() {
     try {
         const respuesta = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${GEMINI_API_KEY}`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
                 'Content-Type': 'application/json'
             },
