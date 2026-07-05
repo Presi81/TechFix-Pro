@@ -1,27 +1,19 @@
 /* ==========================================================================
-   1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos)
+   1. CONFIGURACIÓN E INICIALIZACIÓN DE CLIENTES (Capa de Datos Protegida)
    ========================================================================== */
+// URLs y Llaves de conexión - Abstraídas para evitar fugas en el repositorio público
+const SUPABASE_URL = window.env?.SUPABASE_URL 
+const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY 
 
-// Leemos las variables globales inyectadas de forma externa por config.js
-const SUPABASE_URL = window.env?.SUPABASE_URL || '';
-const SUPABASE_ANON_KEY = window.env?.SUPABASE_ANON_KEY || '';
-const GEMINI_API_KEY = window.env?.GEMINI_API_KEY || '';
+// LLAVE DE ACCESO A LA INTELIGENCIA ARTIFICIAL (Google Gemini)
+const GEMINI_API_KEY = window.env?.GEMINI_API_KEY 
 
-// Inicializamos el cliente global de Supabase de manera segura
-let supabaseClient = null;
-
-try {
-    if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-        supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-    } else {
-        console.warn("Atención: Las llaves de Supabase no se han cargado desde config.js");
-    }
-} catch (err) {
-    console.error("Error crítico al inicializar el SDK de Supabase:", err);
-}
+// Inicializamos el cliente global de Supabase de forma segura
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // Variable global para almacenar el ID del equipo que se está editando (null si es una nueva orden)
 let idEdicionActual = null;
+
 
 /* ==========================================================================
    2. MAPEADO DEL DOM (Selectores de la Interfaz)
