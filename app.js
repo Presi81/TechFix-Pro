@@ -513,3 +513,25 @@ btnIA.addEventListener('click', generarPrediagnostico);
 
 // Carga inicial al inicializar el DOM
 document.addEventListener('DOMContentLoaded', cargarReparaciones);
+
+/* ==========================================================================
+   5. ESCUCHADOR EN TIEMPO REAL (Supabase Realtime)
+   ========================================================================== */
+supabaseClient
+    .channel('cambios-taller')
+    .on('postgres_changes', { event: '*', schema: 'public', table: 'reparaciones' }, (payload) => {
+        console.log('[Realtime] Cambio detectado en la base de datos:', payload.eventType);
+        
+        // Optimización preventiva: Si otro terminal elimina la orden que tengo en edición, limpio el formulario
+        if (payload.eventType === 'DELETE' && idEdicionActual === payload.old.id) {
+            idEdicionActual = null;
+            repairForm.reset();
+            const btnGuardar = repairForm.querySelector('button[type="submit"]');
+            btnGuardar.innerText = '💾 Registrar en Base de Datos';
+            btnGuardar.style.backgroundColor = '';
+        }
+
+        // Volvemos a traer los datos frescos y a recalcular estadísticas automáticamente
+        cargarReparaciones(); 
+    })
+    .subscribe();
